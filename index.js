@@ -4,7 +4,7 @@
 var express = require('express');
 var flock = require('flockos');
 var bodyParser = require('body-parser');
-
+var outGoingHookService = require('services/outGoingHookService.js');
 var app = express();
 
 app.use(bodyParser.json()); // support json encoded bodies
@@ -20,6 +20,7 @@ app.post('/', function (req, res) {
     res.send("done");
 });
 
+app.post('/hook', outGoingHookService);
 app.post('/events', flock.router);
 
 flock.events.on('client.recieve', function (event) {
