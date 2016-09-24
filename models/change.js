@@ -1,4 +1,4 @@
-function Change(){
+function Change() {
     var state = "COMMIT";
 
     var userAd;
@@ -26,6 +26,11 @@ function Change(){
         }
         message = messageTxt;
         return this;
-    }
+    };
 }
+Change.State.COMMIT = 'commit';
+Change.State.PUSH = 'push';
+Change.State.BUILD_SUCCESS = 'buildSuccess';
+Change.State.LIVE = 'live';
+Change.State.LIVE_SUCCESS = 'liveSuccess';
 module.exports = Change;

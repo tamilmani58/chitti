@@ -16,4 +16,4 @@ function ChangeCollection() {
         })
     }
 }
-module.exports = ChangeCollection;
+module.exports = new ChangeCollection();

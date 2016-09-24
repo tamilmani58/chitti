@@ -30,6 +30,9 @@ app.post('/', function (req, res) {
 });
 app.post('/hook', outGoingHookService);
 app.post('/events', flock.router);
+app.post('/build', function (req, res) {
+
+});
 app.post('/push', function (req, res) {
     console.log(req.body);
     if (gitResponseParser.isPushToMaster(req.body) || gitResponseParser.isPushToRelease(req.body)) {

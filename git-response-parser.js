@@ -24,6 +24,7 @@ var parseGitResponseObject = function (response) {
     var parsedResponse = {};
     parsedResponse.name = response.user_name;
     parsedResponse.emailId = response.user_email;
+    parsedResponse.adName = response.user_email.split('@')[0] || '';
     parsedResponse.branchName = getBranchName(response);
     parsedResponse.totalCommits = response.total_commits_count;
     return parsedResponse;
