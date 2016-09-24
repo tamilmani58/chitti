@@ -6,11 +6,11 @@ var getBranchName = function (gitResponse) {
     var ref = gitResponse.ref.split('/');
     return ref[ref.length - 1] || '';
 };
-var isPushToMaster = function (gitResponse) {
-    return getBranchName(gitResponse) === 'master';
+var isPushToMaster = function (branchName) {
+    return branchName === 'master';
 };
-var isPushToRelease = function (gitResponse) {
-    return getBranchName(gitResponse) === 'release';
+var isPushToRelease = function (branchName) {
+    return branchName === 'release';
 }
 
 var parseCommits = function (commits) {

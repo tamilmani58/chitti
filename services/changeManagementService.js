@@ -14,8 +14,8 @@ var commit = function (commitChanges) {
         });
     }
 };
+
 var push = function (pushConfig) {
-    console.log('am i there', pushConfig);
     if (pushConfig.hasOwnProperty('emailId') && pushConfig.hasOwnProperty('name')) {
         return;
     }
@@ -37,9 +37,7 @@ var live = function (liveConfig) {
             pushChange.state(Change.State.LIVE);
         });
     }
-    botService.sendLiveNotification(liveConfig);
-}
-
+};
 
 var changeManagementService = {
     commit: commit,

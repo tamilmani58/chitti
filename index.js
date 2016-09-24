@@ -37,14 +37,17 @@ app.post('/pushbuild', buildManagementService.stageBuild);
 app.post('/livebuild', buildManagementService.liveBuild);
 
 app.post('/push', function (req, res) {
-    if (gitResponseParser.isPushToMaster(req.body) || gitResponseParser.isPushToRelease(req.body)) {
-        var parsedGitResponse = gitResponseParser.parseGitResponseObject(req.body);
-        changeManagementService.push(parsedGitResponse);
-        res.send('response sent');
-    } else {
-        console.log('not pushed to branch master or release');
+    var parsedGitResponse = gitResponseParser.parseGitResponseObject(req.body);
+    if (!(gitResponseParser.isPushToMaster(parsedGitResponse.branchName) || gitResponseParser.isPushToRelease(parsedGitResponse.branchName))) {
+        return res.end();
     }
-    //gitResponseParser.parseCommits(res.body.commits);
+    if (gitResponseParser.isPushToMaster(parsedGitResponse.branchName)) {
+        changeManagementService.push(parsedGitResponse);
+    } else {
+        changeManagementService.live(parsedGitResponse);
+    }
+    res.send('response sent');
+
 });
 
 flock.events.on('client.recieve', function (event) {
