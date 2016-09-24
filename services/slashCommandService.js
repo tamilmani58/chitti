@@ -12,19 +12,18 @@ var getStatusMessage = function () {
         var promise = uploadLogRepository.getLastUploadTime();
         return function (callback) {
             promise.then(function (promiseValue) {
+                var messageTemplate = "Last successful upload was at TIME";
                 callback({
-                   "text": promiseValue
+                    "text": messageTemplate.replace("TIME", promiseValue.datetime)
                 });
                 return;
             });
         };
-        statusMessage = 'The last Upload is live';
-    } else {
-        statusMessage = 'The Current Upload is in ' + currentStatus + ' Phase.';
     }
+    statusMessage = {'text': 'The Current Upload is in ' + currentStatus + ' Phase.'};
     return statusMessage;
 };
-var processText = function (event) {
+var processSlashEvent = function (event) {
     var text = event.text.toLowerCase();
     switch (text) {
         case 'status':
@@ -36,6 +35,6 @@ var processText = function (event) {
     }
 };
 var slashCommandService = {
-    processText: processText
+    processSlashEvent: processSlashEvent
 };
 module.exports = slashCommandService;

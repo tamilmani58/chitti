@@ -18,6 +18,9 @@ var isSet = function (val) {
             return false;
     }
 };
+var isFunction = function (reference) {
+    return typeof reference === "function";
+}
 
 var each = function (obj, callback) {
     if (!isSet(obj)) {
@@ -46,6 +49,7 @@ var util = {
     isArray: isArray,
     each: each,
     isSet: isSet,
+    isFunction: isFunction,
     getRandom: getRandom
 };
 module.exports = util;

@@ -4,6 +4,7 @@
 var express = require('express');
 var gitResponseParser = require('./git-response-parser.js');
 var app = express();
+var util = require('./util.js');
 
 var flock = require('flockos');
 var bodyParser = require('body-parser');
@@ -59,10 +60,7 @@ flock.events.on('client.recieve', function (event) {
 });
 
 flock.events.on('client.slashCommand', function (event) {
-   var textToSend =  slashCommandService.processText(event);
-   return {
-       text: textToSend
-   }
+   return slashCommandService.processSlashEvent(event);
 });
 
 app.listen(1432, function () {
