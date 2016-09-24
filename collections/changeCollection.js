@@ -18,7 +18,13 @@ function ChangeCollection() {
     };
 
     this.sync = function () {
-        console.log(this.filterByState(Change.State.LIVE_SUCCESS));
+        console.log("Change log: " + this.filterByState(Change.State.LIVE_SUCCESS));
+    };
+
+    this.all = function () {
+        changes.forEach(function (change) {
+            console.log(change.toString())
+        });
     };
 
     this.clear = function () {

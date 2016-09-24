@@ -14,7 +14,7 @@ function Change() {
 
     this.userAd = function (user) {
         if (user === undefined) {
-            return user;
+            return userAd;
         }
         userAd = user;
         return this;
@@ -26,6 +26,13 @@ function Change() {
         }
         message = messageTxt;
         return this;
+    };
+    this.toString = function () {
+        return JSON.stringify({
+           state : state,
+            message: message,
+            userAd : userAd
+        });
     };
 }
 Change.State = {};

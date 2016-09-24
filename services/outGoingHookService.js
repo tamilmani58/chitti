@@ -8,18 +8,15 @@ var changeManagementService = require('../services/changeManagementService');
  text: 'hi',
  uid: '1474714428200-RPMME4-apollo-z4' } */
 function receiveMessage(req, res){
-    console.log(req.body);
     var changeMessage = req.body;
     var changeList = changeMessage.text.split("\n");
     var user = userRepository.getUserByFlockId(changeMessage.from);
-    console.log(user);
     changeManagementService.commit(changeList.map(function (change) {
         return {
             userAd: user.userAd(),
             message: change
         };
     }));
-    res.send("Got the Message");
 }
 
 module.exports = receiveMessage;

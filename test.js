@@ -32,7 +32,7 @@ var message = {
     to: 'g:7356796833216454833',
     from: 'u:4llt4rm20lcleer2',
     actor: '',
-    text: 'My changes: Bug fix',
+    text: 'My changes: Bug fix\n  second change',
     uid: '1474714428200-RPMME4-apollo-z4'
 };
 options.headers = {
@@ -66,7 +66,6 @@ function jenkinStageCallback(error, response, body) {
 
 function livepushcallback(error, response, body) {
     if (!error && response.statusCode == 200) {
-        console.log(body);
         pushMessage.ref = "refs/heads/release";
         var options = {
             "url": "http://2b77282c.ngrok.io/push",
@@ -86,7 +85,7 @@ function jenkinliveCallback(error, response, body) {
     if (!error && response.statusCode == 200) {
         var pushMessage = {
             "culprits": ["tamil.s@directi.com"],
-            "status": 0
+            "status": 1
         };
         var options = {
             "url": "http://2b77282c.ngrok.io/livebuild",

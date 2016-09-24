@@ -13,6 +13,8 @@ var commit = function (commitChanges) {
            changeCollection.add(new Change().state(Change.State.COMMIT).userAd(changeObject.userAd).message(changeObject.message));
         });
     }
+    console.log("commit");
+    changeCollection.all();
 };
 
 var push = function (pushConfig) {
@@ -27,16 +29,20 @@ var push = function (pushConfig) {
         });
 
     }
+    console.log("push to stage");
+    changeCollection.all();
 };
 
 var live = function (liveConfig) {
     var userName = liveConfig.name;
-    var changesInPushState = changeCollection.filterByState(Change.State.BUILD_SUCCESS);
+    var changesInPushState = changeCollection.filterByState(Change.State.STAGE_BUILD);
     if (util.isArray(changesInPushState) && changesInPushState.length > 0) {
         changesInPushState.forEach(function (pushChange) {
             pushChange.state(Change.State.LIVE);
         });
     }
+    console.log("push to live");
+    changeCollection.all();
 };
 
 var changeManagementService = {
