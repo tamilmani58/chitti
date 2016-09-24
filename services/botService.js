@@ -8,7 +8,7 @@ function BotService() {
     var options = {
         "url" : config.FLOCK_SEND_MESSAGE_ENDPOINT,
         "X-Flock-User-Token" : config.BOT_TOKEN
-    }
+    };
 
     this.sendPushNotification = function (pushConfig) {
         var message = new Message();
@@ -26,4 +26,4 @@ function BotService() {
 
 }
 
-module.exports = BotService;
+module.exports = new BotService();
