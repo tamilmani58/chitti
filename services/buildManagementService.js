@@ -5,6 +5,7 @@ var changeCollection = require('../collections/changeCollection.js');
 var util = require('../util.js');
 var Change = require('../models/change.js');
 var botService = require('../services/botService');
+var logService = require('../services/logService');
 var stageBuild = function (req, res) {
     var buildUser = req.body.culprits[0];
     var status = req.body.status;
@@ -32,6 +33,8 @@ var stageBuild = function (req, res) {
 var liveBuild = function (req, res) {
     var culprits = req.body.culprits;
     var status = req.body.status;
+    var jenkinsRef = req.body.jenkinsRef;
+    var type = req.body.type;
     var liveStatus = status === 1 ? Change.State.LIVE_SUCCESS : Change.State.STAGE_BUILD;
     culprits.forEach(function (culprit) {
         var adName = culprit.split('@')[0];
@@ -43,7 +46,11 @@ var liveBuild = function (req, res) {
         }
     });
     if (status === 1) {
-        changeCollection.sync();
+        var changesCollection = changeCollection.sync();
+        addUploadLog(changesCollection, {
+            jenkinsRef: jenkinsRef,
+            type: type
+        });
         changeCollection.clear();
         botService.sendLiveBuildSuccessNotification({
             adName: "All"

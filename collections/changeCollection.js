@@ -19,6 +19,8 @@ function ChangeCollection() {
 
     this.sync = function () {
         console.log("Change log: " + this.filterByState(Change.State.LIVE_SUCCESS));
+        return this.filterByState(Change.State.LIVE_SUCCESS);
+
     };
 
     this.all = function () {
