@@ -3,6 +3,7 @@
  */
 var stateManagementService = require('../services/stateManagementService.js');
 var uploadLogRepository = require('../repositories/uploadLogRepository.js');
+var botService = require('../services/botService.js');
 
 var Change = require('../models/change.js');
 var getStatusMessage = function () {
@@ -25,13 +26,16 @@ var getStatusMessage = function () {
 };
 var processSlashEvent = function (event) {
     var text = event.text.toLowerCase();
-    switch (text) {
-        case 'status':
-            return getStatusMessage();
-        case 'duration':
-            return {'text': 'Gimme Some Time'};
-        default:
-            return {'text':'Sorry Wrong Command !'};
+    if (text === 'status') {
+        return getStatusMessage();
+    } else if (text.indexOf('duration') !== -1) {
+        var durationText = text.split(" ")[1];
+        var format = durationText.substring(-1);
+        var duration = parseInt(durationText.substring(0, durationText.length -1));
+        botService.sendDurationNotification(event, duration, format);
+        return {'text': 'Gimme Some Time'};
+    } else {
+        return {'text':'Sorry Wrong Command !'};
     }
 };
 var slashCommandService = {

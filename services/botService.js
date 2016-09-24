@@ -2,6 +2,9 @@ var Message = require("../models/message");
 var config = require("../config/appconfig");
 var request = require("request");
 var util = require('../util');
+var uploadLogRepository = require('../repositories/uploadLogRepository');
+var templateService = require('../services/templateService.js');
+var handlebars = require('handlebars');
 function BotService() {
     var successStageTemplate = [
         "Hey @USERNAME, Your changes are ready in SETUP",
@@ -38,7 +41,7 @@ function BotService() {
         }
     };
 
-    function sendMessasge(messageTxt, callback) {
+    function sendMessage(messageTxt, callback) {
         var message = new Message()
             .to(config.DEFAULT_GROUP_ID)
             .from(config.BOT_GUID)
@@ -47,29 +50,74 @@ function BotService() {
         options.method = 'POST';
         request(options, callback);
     }
+    function postAttachment(userId, duration, html) {
+        var requestBody = {};
+        requestBody.message = {};
+        requestBody.message.to = userId;
+        requestBody.message.text = "Here You Go"
+        requestBody.message.attachments = [];
+        var attachment = {};
+        attachment.title = "Change Logs";
+        attachment.description = "Change Logs for " + duration;
+        attachment.views = {};
+        attachment.views.html = {};
+        attachment.views.html.inline = html;
+        attachment.views.html.width = 400;
+        attachment.views.html.height = 400;
+        requestBody.message.attachments.push(attachment);
+        options.body = requestBody;
+        request(options, function () {});
+    }
 
     this.sendStageBuildSuccessNotification = function (pushConfig) {
         var messageText = successStageTemplate[util.getRandom(0, successStageTemplate.length - 1)]
             .replace("USERNAME", pushConfig.adName).replace("SETUP", "Stage");
-        sendMessasge(messageText, this.sendMessageCallback);
+        sendMessage(messageText, this.sendMessageCallback);
     };
 
     this.sendStageBuildFailNotification = function (pushConfig) {
         var messageText = failTemplate[util.getRandom(0, failTemplate.length - 1)]
             .replace("USERNAME", pushConfig.adName).replace("SETUP", "Stage");
-        sendMessasge(messageText, this.sendMessageCallback);
+        sendMessage(messageText, this.sendMessageCallback);
     };
 
     this.sendLiveBuildSuccessNotification = function (pushConfig) {
         var messageText = successLiveTemplate[util.getRandom(0, successLiveTemplate.length - 1)]
             .replace("USERNAME", pushConfig.adName).replace("SETUP", "Live");
-        sendMessasge(messageText, this.sendMessageCallback);
+        sendMessage(messageText, this.sendMessageCallback);
     };
     this.sendLiveBuildFailNotification = function (pushConfig) {
         var messageText = failTemplate[util.getRandom(0, failTemplate.length - 1)]
             .replace("USERNAME", pushConfig.adName).replace("SETUP", "Live");
-        sendMessasge(messageText, this.sendMessageCallback);
+        sendMessage(messageText, this.sendMessageCallback);
     };
+    this.sendDurationNotification = function (event, duration, format) {
+        var startTime = moment().subtract(duration, format).utc().format();
+        var endTime = moment().utc().format();
+        var getUploadsPromise = uploadLogRepository.getUploadsForDuration(startTime, endTime);
+
+        getUploadsPromise.then(function (data) {
+            var parsedResponse = {};
+            if (util.isArray(data) && data.length > 0) {
+                data.forEach(function (changeLog) {
+                    var changeLogResponse = {};
+                    var date = changeLog.dateTime;
+                   parsedResponse[date] =  parsedResponse[date] || [];
+                    changeLogResponse.changeLog = changeLog.changelog;
+                    changeLogResponse.email = changeLog.email;
+                    changeLogResponse.uploadHr = moment(date).format("HH:mm");
+                    parsedResponse[date].push(changeLogResponse)
+                });
+            }
+            var changeListTemplateString = templateService.getChangeListTemplate();
+            var changeListTemplate = handlebars.compile(changeListTemplateString);
+            var changeListHtml = changeListTemplate(parsedResponse);
+
+            postAttachment(event.userId, duration, changeListHtml);
+
+        });
+
+    }
 }
 
 module.exports = new BotService();

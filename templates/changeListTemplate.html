@@ -1,7 +1,7 @@
-{{#each data}}
-<span> {{date}} </span>
+{{#each this}}
+<span> {{@key}} </span>
 <ul>
-    {{#each changes}}
+    {{#each this}}
     <li> {{changeLog}} {{email}} {{uploadHr}}</li>
     {{/each}}
 </ul>
