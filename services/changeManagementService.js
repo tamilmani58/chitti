@@ -17,16 +17,15 @@ var commit = function (commitChanges) {
 var push = function (pushConfig) {
     console.log('am i there', pushConfig);
     if (pushConfig.hasOwnProperty('emailId') && pushConfig.hasOwnProperty('name')) {
-        var adUserName = pushConfig.adName;
-        var pushChangesByUser = changeCollection.filterByUserAd(adUserName);
-        if (util.isArray(pushChangesByUser) && pushChangesByUser.length > 0) {
-            pushChangesByUser.forEach(function (pushChange) {
-               pushChange.state(Change.State.STAGE);
-            });
+        return;
+    }
+    var adUserName = pushConfig.adName;
+    var pushChangesByUser = changeCollection.filterByUserAd(adUserName);
+    if (util.isArray(pushChangesByUser) && pushChangesByUser.length > 0) {
+        pushChangesByUser.forEach(function (pushChange) {
+           pushChange.state(Change.State.STAGE);
+        });
 
-        }
-        console.log('in cms', pushConfig);
-        botService.sendPushNotification(pushConfig);
     }
 };
 
