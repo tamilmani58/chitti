@@ -1,6 +1,8 @@
-<span> {{map.date}} </span>
+{{#each data}}
+<span> {{date}} </span>
 <ul>
-    {{#each map.changes}}
-    <li> {{change}} {{user}} {{hour}}</li>
+    {{#each changes}}
+    <li> {{changeLog}} {{email}} {{uploadHr}}</li>
     {{/each}}
 </ul>
+{{/each}}

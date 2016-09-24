@@ -8,6 +8,7 @@
     "express": "^4.14.0",
     "flockos": "git://github.com/talk-to/flockos-node-sdk",
     "handlebars": "^4.0.5",
+    "moment": "^2.15.1",
     "mysql": "^2.11.1",
     "request": "^2.75.0",
     "sequelize": "^3.24.3",
