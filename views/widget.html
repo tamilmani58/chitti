@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Code Upload Changes</title>
+    <!-- Create a simple CodeMirror instance -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.19.0/codemirror.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.19.0/codemirror.min.js"></script>
+    <style type="text/css">
+        .body {
+            width: 100%;
+            height: 100%
+        }
+        button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div id="code">
+    </div>
+    <div>
+        <div style="display: inline;float:right">
+            <button>Submit</button>
+        </div>
+    </div>
+    <script>
+        CodeMirror(document.getElementById("code"), {
+            mode: "text/plain",
+            lineWrapping: true,
+            lineNumbers: true,
+            styleActiveLine: true
+        });
+    </script>
+</body>
+</html>

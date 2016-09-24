@@ -5,6 +5,7 @@ var express = require('express');
 var gitResponseParser = require('./git-response-parser.js');
 var app = express();
 var util = require('./util.js');
+var path = require('path');
 
 var flock = require('flockos');
 var bodyParser = require('body-parser');
@@ -35,8 +36,11 @@ app.post('/hook', outGoingHookService);
 app.post('/events', flock.router);
 
 app.post('/pushbuild', buildManagementService.stageBuild);
+app.post('/stagebuild', buildManagementService.stageBuild);
 app.post('/livebuild', buildManagementService.liveBuild);
-
+app.get('/widget', function (req, res) {
+    res.sendFile(path.join(__dirname + 'views/widget.html'));
+});
 app.post('/push', function (req, res) {
     console.log("did it push", req.body);
     var parsedGitResponse = gitResponseParser.parseGitResponseObject(req.body);
