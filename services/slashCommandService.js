@@ -29,9 +29,9 @@ var processSlashEvent = function (event) {
         case 'status':
             return getStatusMessage();
         case 'duration':
-            return 'Gimme Some Time';
+            return {'text': 'Gimme Some Time'};
         default:
-            return 'Sorry Wrong Command !';
+            return {'text':'Sorry Wrong Command !'};
     }
 };
 var slashCommandService = {
