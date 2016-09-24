@@ -23,4 +23,4 @@ function UserRepository() {
     }
     init();
 }
-module.exports = UserRepository;
+module.exports = new UserRepository();
