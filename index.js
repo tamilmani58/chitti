@@ -37,7 +37,6 @@ app.post('/build', function (req, res) {
 app.post('/push', function (req, res) {
     if (gitResponseParser.isPushToMaster(req.body) || gitResponseParser.isPushToRelease(req.body)) {
         var parsedGitResponse = gitResponseParser.parseGitResponseObject(req.body);
-        console.log(parsedGitResponse);
         changeManagementService.push(parsedGitResponse);
         res.send('response sent');
     } else {

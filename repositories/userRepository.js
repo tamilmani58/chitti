@@ -3,15 +3,14 @@ var User = require("../models/user")
 function UserRepository() {
     var users = [];
     this.getUserByFlockId = function (flockId) {
-        users.forEach(function (user) {
-            if(user.flockId === flockId)
-                return this;
+        return users.find(function (user) {
+            return user.flockId() === flockId;
         })
     };
 
     this.getUserByAd = function (userAd) {
       return users.find(function (user) {
-        return user.userAd === userAd;
+        return user.userAd() === userAd;
       });
     };
 

@@ -27,11 +27,11 @@ function Message() {
     };
 
     this.toJSON = function () {
-        return JSON.stringify({
+        return JSON.stringify({"message": {
             text: text,
             to: to,
             from: from
-        });
+        }});
     }
 
 }
