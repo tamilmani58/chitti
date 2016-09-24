@@ -42,12 +42,15 @@ var liveBuild = function (req, res) {
         }
     });
     if (status === 1) {
+        changeCollection.sync();
+        changeCollection.clear();
         botService.sendLiveBuildSuccessNotification({
             adName: "All"
         });
         return res.end();
     }
     botService.sendLiveBuildFailNotification({
+
         adName: "All"
     });
 };
