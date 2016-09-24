@@ -9,7 +9,15 @@ var getStatusMessage = function () {
     var statusMessage = '';
     var currentStatus = stateManagementService.currentStatus();
     if (currentStatus === Change.State.LIVE_SUCCESS) {
-        return uploadLogRepository.getLastUploadTime();
+        var promise = uploadLogRepository.getLastUploadTime();
+        return function (callback) {
+            promise.then(function (promiseValue) {
+                callback({
+                   "text": promiseValue
+                });
+                return;
+            });
+        };
         statusMessage = 'The last Upload is live';
     } else {
         statusMessage = 'The Current Upload is in ' + currentStatus + ' Phase.';
