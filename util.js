@@ -38,9 +38,14 @@ var each = function (obj, callback) {
         }
     }
 };
+var getRandom = function getRandom(from, to) {
+    return Math.floor(Math.random() * (to - from + 1) + from);
+};
+
 var util = {
     isArray: isArray,
     each: each,
-    isSet: isSet
+    isSet: isSet,
+    getRandom: getRandom
 };
 module.exports = util;
