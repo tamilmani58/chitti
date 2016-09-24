@@ -11,6 +11,7 @@ var config = require('./config/appconfig.js');
 var outGoingHookService = require('./services/outGoingHookService.js');
 var changeManagementService = require('./services/changeManagementService.js');
 var buildManagementService = require('./services/buildManagementService.js');
+var slashCommandService = require('./services/slashCommandService.js');
 var app = express();
 
 flock.setAppId(config.APP_ID);
@@ -56,8 +57,9 @@ flock.events.on('client.recieve', function (event) {
 });
 
 flock.events.on('client.slashCommand', function (event) {
+   var textToSend =  slashCommandService.processText(event);
    return {
-       text: "Gimme Few Minutes..."
+       text: textToSend
    }
 });
 

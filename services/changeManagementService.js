@@ -5,12 +5,14 @@ var Change = require('../models/change.js');
 var changeCollection = require('../collections/changeCollection.js');
 var util = require('../util.js');
 var botService = require('../services/botService.js');
+var stateManagementService = require('../services/stateManagementService.js');
 
 
 var commit = function (commitChanges) {
+    stateManagementService.currentStatus(Change.State.COMMIT);
     if (util.isArray(commitChanges) && commitChanges.length > 0) {
         commitChanges.forEach(function (changeObject) {
-           changeCollection.add(new Change().state(Change.State.COMMIT).userAd(changeObject.userAd).message(changeObject.message));
+            changeCollection.add(new Change().state(Change.State.COMMIT).userAd(changeObject.userAd).message(changeObject.message));
         });
     }
     console.log("commit");
@@ -18,6 +20,7 @@ var commit = function (commitChanges) {
 };
 
 var push = function (pushConfig) {
+    stateManagementService.currentStatus(Change.State.STAGE);
     if (pushConfig.hasOwnProperty('emailId') && pushConfig.hasOwnProperty('name')) {
         return;
     }
@@ -25,7 +28,7 @@ var push = function (pushConfig) {
     var pushChangesByUser = changeCollection.filterByUserAd(adUserName);
     if (util.isArray(pushChangesByUser) && pushChangesByUser.length > 0) {
         pushChangesByUser.forEach(function (pushChange) {
-           pushChange.state(Change.State.STAGE);
+            pushChange.state(Change.State.STAGE);
         });
 
     }
@@ -34,6 +37,7 @@ var push = function (pushConfig) {
 };
 
 var live = function (liveConfig) {
+    stateManagementService.currentStatus(Change.State.LIVE);
     var userName = liveConfig.name;
     var changesInPushState = changeCollection.filterByState(Change.State.STAGE_BUILD);
     if (util.isArray(changesInPushState) && changesInPushState.length > 0) {
@@ -47,8 +51,8 @@ var live = function (liveConfig) {
 
 var changeManagementService = {
     commit: commit,
-    push:  push,
-    live:  live
+    push: push,
+    live: live
 };
 
 module.exports = changeManagementService;

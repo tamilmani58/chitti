@@ -6,6 +6,7 @@ var util = require('../util.js');
 var Change = require('../models/change.js');
 var botService = require('../services/botService');
 var logService = require('../services/logService');
+var stateManagementService = require('../services/stateManagementService.js');
 var TYPE = {
     REVERT : 2,
     UPLOAD : 1,
@@ -23,6 +24,7 @@ var stageBuild = function (req, res) {
             buildChange.state(buildStatus);
         });
     }
+    stateManagementService.currentStatus(buildStatus);
     changeCollection.all();
     if (status === 1) {
         botService.sendStageBuildSuccessNotification({
@@ -50,6 +52,7 @@ var liveBuild = function (req, res) {
             });
         }
     });
+    stateManagementService.currentStatus(liveStatus);
     if (status === 1) {
         var changesCollection = changeCollection.sync();
         addUploadLog(changesCollection, {
