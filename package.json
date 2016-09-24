@@ -1,0 +1,23 @@
+{
+  "name": "chitti",
+  "version": "0.0.1",
+  "description": "Chitti the BOT",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.14.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tamilmani58/chitti.git"
+  },
+  "author": "tamil.3758@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tamilmani58/chitti/issues"
+  },
+  "homepage": "https://github.com/tamilmani58/chitti"
+}
