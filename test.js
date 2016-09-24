@@ -47,7 +47,8 @@ function jenkinStageCallback(error, response, body) {
     if (!error && response.statusCode == 200) {
         var pushMessage = {
             "culprits": ["tamil.s@directi.com"],
-            "status": 1
+            "status": 1,
+            "jenkinsRef" : "http://ci.media.net"
         };
         var options = {
             "url": "http://2b77282c.ngrok.io/pushbuild",
@@ -85,7 +86,8 @@ function jenkinliveCallback(error, response, body) {
     if (!error && response.statusCode == 200) {
         var pushMessage = {
             "culprits": ["tamil.s@directi.com"],
-            "status": 1
+            "status": 1,
+            "jenkinsRef" : "http://ci.media.net"
         };
         var options = {
             "url": "http://2b77282c.ngrok.io/livebuild",

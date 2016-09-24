@@ -6,6 +6,11 @@ var util = require('../util.js');
 var Change = require('../models/change.js');
 var botService = require('../services/botService');
 var logService = require('../services/logService');
+var TYPE = {
+    REVERT : 2,
+    UPLOAD : 1,
+    TEST : 0
+};
 var stageBuild = function (req, res) {
     var buildUser = req.body.culprits[0];
     var status = req.body.status;
@@ -33,8 +38,8 @@ var stageBuild = function (req, res) {
 var liveBuild = function (req, res) {
     var culprits = req.body.culprits;
     var status = req.body.status;
-    var jenkinsRef = req.body.jenkinsRef;
-    var type = req.body.type;
+    var jenkinsRef = req.body.jenkinsRef ;
+    var type = req.body.type || TYPE.UPLOAD;
     var liveStatus = status === 1 ? Change.State.LIVE_SUCCESS : Change.State.STAGE_BUILD;
     culprits.forEach(function (culprit) {
         var adName = culprit.split('@')[0];
