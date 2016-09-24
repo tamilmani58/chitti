@@ -55,6 +55,12 @@ flock.events.on('client.recieve', function (event) {
     }
 });
 
+flock.events.on('client.slashCommand', function (event) {
+   return {
+       text: "Gimme Few Minutes..."
+   }
+});
+
 app.listen(1432, function () {
     console.log('Example app listening on port 1432!');
 });

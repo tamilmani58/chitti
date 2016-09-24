@@ -70,7 +70,6 @@ function BotService() {
             .replace("USERNAME", pushConfig.adName).replace("SETUP", "Live");
         sendMessasge(messageText, this.sendMessageCallback);
     };
-
 }
 
 module.exports = new BotService();
