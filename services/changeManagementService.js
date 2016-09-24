@@ -1,10 +1,10 @@
 /**
  * Created by pritam on 24/9/16.
  */
-var Change = require('./models/change.js');
-var changeCollection = require('.models/changeCollection.js');
-var util = require('./util.js');
-var botService = require('./services/botService.js');
+var Change = require('../models/change.js');
+var changeCollection = require('../collections/changeCollection.js');
+var util = require('../util.js');
+var botService = require('../services/botService.js');
 
 
 var commit = function (commitChanges) {
