@@ -6,7 +6,7 @@ var uploadlog = sequelize.define('uploadlog', {
         primaryKey: true
     },
     datetime: {
-        type: Sequelize.DATETIME
+        type: Sequelize.DATE
     },
     jenkinsRef: {
         type: Sequelize.STRING

@@ -18,6 +18,7 @@ var commit = function (commitChanges) {
 };
 
 var push = function (pushConfig) {
+    console.log("push config" , pushConfig);
     if (pushConfig.hasOwnProperty('emailId') && pushConfig.hasOwnProperty('name')) {
         return;
     }
