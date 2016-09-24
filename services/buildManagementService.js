@@ -4,10 +4,10 @@
 var changeCollection = require('../collections/changeCollection.js');
 var util = require('../util.js');
 var Change = require('../models/change.js');
-var pushBuild = function (req, res) {
+var stageBuild = function (req, res) {
   var culprits = req.body.culprits;
     var status = req.body.status;
-    var buildStatus = status === 1 ? Change.State.PUSH_SUCCESS: Change.State.COMMIT;
+    var buildStatus = status === 1 ? Change.State.STAGE_BUILD: Change.State.COMMIT;
     culprits.forEach(function (culprit) {
         var adName = culprit.split('@')[0];
         var buildChanges = changeCollection.filterByUserAd(adName);
@@ -24,7 +24,7 @@ var pushBuild = function (req, res) {
 var liveBuild = function (req, res) {
     var culprits = req.body.culprits;
     var status = req.body.status;
-    var liveStatus = status === 1 ? Change.State.LIVE_SUCCESS : Change.State.PUSH_SUCCESS;
+    var liveStatus = status === 1 ? Change.State.LIVE_SUCCESS : Change.State.STAGE_BUILD;
     culprits.forEach(function (culprit) {
         var adName = culprit.split('@')[0];
         var liveChanges = changeCollection.filterByUserAd(adName);
@@ -40,7 +40,7 @@ var liveBuild = function (req, res) {
 };
 
 var buildManagementService = {
-    pushBuild: pushBuild,
+    stageBuild: stageBuild,
     liveBuild: liveBuild
 };
 module.exports = buildManagementService;

@@ -32,8 +32,10 @@ app.post('/', function (req, res) {
 });
 app.post('/hook', outGoingHookService);
 app.post('/events', flock.router);
-app.post('/pushbuild', buildManagementService.pushBuild);
+
+app.post('/pushbuild', buildManagementService.stageBuild);
 app.post('/livebuild', buildManagementService.liveBuild);
+
 app.post('/push', function (req, res) {
     if (gitResponseParser.isPushToMaster(req.body) || gitResponseParser.isPushToRelease(req.body)) {
         var parsedGitResponse = gitResponseParser.parseGitResponseObject(req.body);
@@ -44,6 +46,7 @@ app.post('/push', function (req, res) {
     }
     //gitResponseParser.parseCommits(res.body.commits);
 });
+
 flock.events.on('client.recieve', function (event) {
     return {
         text: 'Got: ' + event.text
