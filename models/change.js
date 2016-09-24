@@ -28,6 +28,7 @@ function Change() {
         return this;
     };
 }
+Change.State = {};
 Change.State.COMMIT = 'commit';
 Change.State.PUSH = 'push';
 Change.State.BUILD_SUCCESS = 'buildSuccess';

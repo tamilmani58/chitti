@@ -1,4 +1,5 @@
 var userRepository = require("../repositories/userRepository");
+var changeManagementService = require('../services/changeManagementService');
 /*{ type: 'GROUPCHAT',
  id: '00002d11-0000-003d-0000-00000000f995',
  to: 'g:7356796833216454833',
