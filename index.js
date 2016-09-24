@@ -37,10 +37,12 @@ app.post('/pushbuild', buildManagementService.stageBuild);
 app.post('/livebuild', buildManagementService.liveBuild);
 
 app.post('/push', function (req, res) {
+    console.log("did it push", req.body);
     var parsedGitResponse = gitResponseParser.parseGitResponseObject(req.body);
     if (!(gitResponseParser.isPushToMaster(parsedGitResponse.branchName) || gitResponseParser.isPushToRelease(parsedGitResponse.branchName))) {
         return res.end();
     }
+    console.log(parsedGitResponse);
     if (gitResponseParser.isPushToMaster(parsedGitResponse.branchName)) {
         changeManagementService.push(parsedGitResponse);
     } else {

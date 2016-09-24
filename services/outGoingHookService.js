@@ -17,6 +17,7 @@ function receiveMessage(req, res){
             message: change
         };
     }));
+    res.end();
 }
 
 module.exports = receiveMessage;

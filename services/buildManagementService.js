@@ -13,6 +13,7 @@ var TYPE = {
     TEST : 0
 };
 var stageBuild = function (req, res) {
+    console.log("stage build",req.body);
     var buildUser = req.body.culprits[0];
     var status = req.body.status;
     var buildStatus = status === 1 ? Change.State.STAGE_BUILD: Change.State.COMMIT;
@@ -55,7 +56,7 @@ var liveBuild = function (req, res) {
     stateManagementService.currentStatus(liveStatus);
     if (status === 1) {
         var changesCollection = changeCollection.sync();
-        addUploadLog(changesCollection, {
+        logService.addUploadLog(changesCollection, {
             jenkinsRef: jenkinsRef,
             type: type
         });

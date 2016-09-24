@@ -8,16 +8,16 @@ var logService = function () {
         var uniqueId = uuid.v1();
         var dateTime = new Date();
         uploadLogRepository.createUploadLog({
-            uploadID: uuid,
-            dateTime: dateTime,
+            uploadID: uniqueId,
+            datetime: dateTime,
             jenkinsRef: jenkinsData.jenkinsRef,
             type: jenkinsData.type
         });
         changeLogCollection.forEach(function (change) {
            changeLogRepository.createChangeLog({
-               uploadID: uuid,
-               email: userRepository.getUserByAd(change.userAd),
-               changeLog: change.message
+               uploadID: uniqueId,
+               email: userRepository.getUserByAd(change.userAd()).email(),
+               changeLog: change.message()
            })
         });
     }

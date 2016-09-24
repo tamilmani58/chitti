@@ -12,7 +12,7 @@ var commit = function (commitChanges) {
     stateManagementService.currentStatus(Change.State.COMMIT);
     if (util.isArray(commitChanges) && commitChanges.length > 0) {
         commitChanges.forEach(function (changeObject) {
-            changeCollection.add(new Change().state(Change.State.COMMIT).userAd(changeObject.userAd).message(changeObject.message));
+           changeCollection.add(new Change().state(Change.State.COMMIT).userAd(changeObject.userAd).message(changeObject.message));
         });
     }
     console.log("commit");
@@ -28,7 +28,7 @@ var push = function (pushConfig) {
     var pushChangesByUser = changeCollection.filterByUserAd(adUserName);
     if (util.isArray(pushChangesByUser) && pushChangesByUser.length > 0) {
         pushChangesByUser.forEach(function (pushChange) {
-            pushChange.state(Change.State.STAGE);
+           pushChange.state(Change.State.STAGE);
         });
 
     }
@@ -51,8 +51,8 @@ var live = function (liveConfig) {
 
 var changeManagementService = {
     commit: commit,
-    push: push,
-    live: live
+    push:  push,
+    live:  live
 };
 
 module.exports = changeManagementService;
