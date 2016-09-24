@@ -5,9 +5,14 @@ var express = require('express');
 var gitResponseParser = require('./git-response-parser.js');
 var app = express();
 
+var flock = require('flockos');
 var bodyParser = require('body-parser');
+
+var app = express();
+
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+app.use(flock.validationTokenChecker);
 
 app.get('/', function (req, res) {
     res.send('Hello World!');
@@ -28,6 +33,14 @@ app.post('/push', function (req, res) {
         console.log('not pushed to branch master or release');
     }
     //gitResponseParser.parseCommits(res.body.commits);
+});
+
+app.post('/events', flock.router);
+
+flock.events.on('client.recieve', function (event) {
+    return {
+        text: 'Got: ' + event.text
+    }
 });
 
 app.listen(1432, function () {
