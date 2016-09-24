@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 var config = require('./config/appconfig.js');
 var outGoingHookService = require('./services/outGoingHookService.js');
 var changeManagementService = require('./services/changeManagementService.js');
+var buildManagementService = require('./services/buildManagementService.js');
 var app = express();
 
 flock.setAppId(config.APP_ID);
@@ -31,9 +32,8 @@ app.post('/', function (req, res) {
 });
 app.post('/hook', outGoingHookService);
 app.post('/events', flock.router);
-app.post('/build', function (req, res) {
-
-});
+app.post('/pushbuild', buildManagementService.pushBuild);
+app.post('/livebuild', buildManagementService.liveBuild);
 app.post('/push', function (req, res) {
     if (gitResponseParser.isPushToMaster(req.body) || gitResponseParser.isPushToRelease(req.body)) {
         var parsedGitResponse = gitResponseParser.parseGitResponseObject(req.body);
