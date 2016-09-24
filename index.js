@@ -4,12 +4,18 @@
 var express = require('express');
 var flock = require('flockos');
 var bodyParser = require('body-parser');
-var outGoingHookService = require('services/outGoingHookService.js');
+var config = require('./config/appconfig.js');
+var outGoingHookService = require('./services/outGoingHookService.js');
 var app = express();
+
+flock.setAppId(config.APP_ID);
+flock.setAppSecret(config.APP_SECRET);
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(flock.validationTokenChecker);
+
+
 
 app.get('/', function (req, res) {
     res.send('Hello World!');
