@@ -4,7 +4,9 @@
   "description": "Chitti the BOT",
   "main": "index.js",
   "dependencies": {
-    "express": "^4.14.0"
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "flockos": "git://github.com/talk-to/flockos-node-sdk"
   },
   "devDependencies": {},
   "scripts": {
