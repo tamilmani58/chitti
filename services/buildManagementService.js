@@ -6,6 +6,7 @@ var util = require('../util.js');
 var Change = require('../models/change.js');
 var botService = require('../services/botService');
 var stageBuild = function (req, res) {
+    console.log(req.body);
     var buildUser = req.body.culprits[0];
     var status = req.body.status;
     var buildStatus = status === 1 ? Change.State.STAGE_BUILD: Change.State.COMMIT;

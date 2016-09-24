@@ -40,7 +40,6 @@ function BotService() {
     };
 
     function sendMessasge(messageTxt, callback) {
-        console.log('inside pn', pushConfig);
         var message = new Message()
             .to(config.DEFAULT_GROUP_ID)
             .from(config.BOT_GUID)
