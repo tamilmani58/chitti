@@ -3,10 +3,22 @@ var config = require("../config/appconfig");
 var request = require("request");
 var util = require('../util');
 function BotService() {
-    var successMessageTemplate = [
-        "Hey @USERNAME, I received your changes in SETUP",
-        "Hurray USERNAME, I got you in SETUP"
+    var successStageTemplate = [
+        "Hey @USERNAME, Your changes are ready in SETUP",
+        "Hurray @USERNAME, I got you in SETUP",
+        "Hey @USERNAME, Keep calm and do tests, SETUP is ready",
+        "Hey @USERNAME, Check the code in SETUP before we Take Off",
+        "Hey @USERNAME, This is your Last Resort, code is ready in SETUP"
         ];
+
+    var successLiveTemplate = [
+        "Hey @USERNAME, Buckle Up you ppl just affected Billions of Users",
+        "Hey @USERNAME, And we shipped IT",
+        "Hey @USERNAME, Buckle up, we are Live",
+        "Hey @USERNAME, You did it",
+        "Hey @USERNAME, Game ON, we are Live"
+    ];
+
     var failTemplate = [
         "Hey @USERNAME, heads up. We screwed something up in SETUP",
         ""
@@ -39,7 +51,7 @@ function BotService() {
     }
 
     this.sendStageBuildSuccessNotification = function (pushConfig) {
-        var messageText = successMessageTemplate[util.getRandom(0, successMessageTemplate.length - 1)]
+        var messageText = successStageTemplate[util.getRandom(0, successStageTemplate.length - 1)]
             .replace("USERNAME", pushConfig.adName).replace("SETUP", "Stage");
         sendMessasge(messageText, this.sendMessageCallback);
     };
@@ -51,7 +63,7 @@ function BotService() {
     };
 
     this.sendLiveBuildSuccessNotification = function (pushConfig) {
-        var messageText = successMessageTemplate[util.getRandom(0, successMessageTemplate.length - 1)]
+        var messageText = successLiveTemplate[util.getRandom(0, successLiveTemplate.length - 1)]
             .replace("USERNAME", pushConfig.adName).replace("SETUP", "Live");
         sendMessasge(messageText, this.sendMessageCallback);
     };

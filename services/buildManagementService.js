@@ -39,7 +39,6 @@ var liveBuild = function (req, res) {
                 liveChange.state(liveStatus);
             });
         }
-        console.log('add bot Service code');
     });
     if (status === 1) {
         botService.sendLiveBuildSuccessNotification({
