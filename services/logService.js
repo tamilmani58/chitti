@@ -1,12 +1,13 @@
 var uploadLogRepository = require("../repositories/uploadLogRepository");
 var changeLogRepository = require("../repositories/changeLogRepository");
 var userRepository = require("../repositories/userRepository");
+var moment = require('moment');
 
 var uuid = require("uuid");
 var logService = function () {
     this.addUploadLog = function(changeLogCollection, jenkinsData){
         var uniqueId = uuid.v1();
-        var dateTime = new Date();
+        var dateTime = moment().utc().format();
         uploadLogRepository.createUploadLog({
             uploadID: uniqueId,
             datetime: dateTime,

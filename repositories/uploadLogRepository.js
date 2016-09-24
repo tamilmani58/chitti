@@ -1,6 +1,7 @@
 var uploadLog = require('../dbmodels/Upload');
 var Sequelize = require("sequelize");
 var sequelize = require("../services/sqlService");
+var moment = require("moment");
 function uploadLogRepository() {
     this.createUploadLog = function(uploadLogObj){
         return uploadLog.create(uploadLogObj);
