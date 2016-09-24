@@ -21,7 +21,7 @@ var push = function (pushConfig) {
         var pushChangesByUser = changeCollection.filterByUserAd(adUserName);
         if (util.isArray(pushChangesByUser) && pushChangesByUser.length > 0) {
             pushChangesByUser.forEach(function (pushChange) {
-               pushChange.state(Change.State.PUSH);
+               pushChange.state(Change.State.STAGE);
             });
 
         }

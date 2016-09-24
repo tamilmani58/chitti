@@ -30,8 +30,8 @@ function Change() {
 }
 Change.State = {};
 Change.State.COMMIT = 'commit';
-Change.State.PUSH = 'push';
-Change.State.BUILD_SUCCESS = 'buildSuccess';
+Change.State.STAGE = 'stage';
+Change.State.STAGE_BUILD = 'stageBuild';
 Change.State.LIVE = 'live';
-Change.State.LIVE_SUCCESS = 'liveSuccess';
+Change.State.LIVE_SUCCESS = 'liveBuild';
 module.exports = Change;
