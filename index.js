@@ -4,6 +4,7 @@
 var express = require('express');
 var gitResponseParser = require('./git-response-parser.js');
 var app = express();
+var util = require('./util.js');
 
 var flock = require('flockos');
 var bodyParser = require('body-parser');
@@ -11,6 +12,7 @@ var config = require('./config/appconfig.js');
 var outGoingHookService = require('./services/outGoingHookService.js');
 var changeManagementService = require('./services/changeManagementService.js');
 var buildManagementService = require('./services/buildManagementService.js');
+var slashCommandService = require('./services/slashCommandService.js');
 var app = express();
 
 flock.setAppId(config.APP_ID);
@@ -58,9 +60,7 @@ flock.events.on('client.recieve', function (event) {
 });
 
 flock.events.on('client.slashCommand', function (event) {
-   return {
-       text: "Gimme Few Minutes..."
-   }
+   return slashCommandService.processSlashEvent(event);
 });
 
 app.listen(1432, function () {
