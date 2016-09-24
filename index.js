@@ -9,6 +9,7 @@ var flock = require('flockos');
 var bodyParser = require('body-parser');
 var config = require('./config/appconfig.js');
 var outGoingHookService = require('./services/outGoingHookService.js');
+var changeManagementService = require('./services/changeManagementService.js');
 var app = express();
 
 flock.setAppId(config.APP_ID);
@@ -34,10 +35,10 @@ app.post('/build', function (req, res) {
 
 });
 app.post('/push', function (req, res) {
-    console.log(req.body);
     if (gitResponseParser.isPushToMaster(req.body) || gitResponseParser.isPushToRelease(req.body)) {
         var parsedGitResponse = gitResponseParser.parseGitResponseObject(req.body);
         console.log(parsedGitResponse);
+        changeManagementService.push(parsedGitResponse);
         res.send('response sent');
     } else {
         console.log('not pushed to branch master or release');
