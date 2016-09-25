@@ -79,16 +79,16 @@ function BotService() {
             var requestBody = {};
             requestBody.message = {};
             requestBody.message.to = receiver;
-            requestBody.message.text = "Lets see what " + adname + "has to Upload";
+            requestBody.message.text = "";
             requestBody.message.attachments = [];
             var attachment = {};
             attachment.title = adname + "'s changes :-";
-            attachment.description = "These are the changes made by " + adname + "for the current upload";
+            attachment.description = "";
             attachment.views = {};
             attachment.views.html = {};
             attachment.views.html.inline = compiledHtml;
             attachment.views.html.width = 400;
-            attachment.views.html.height = 300;
+            //attachment.views.html.height = 300;
             requestBody.message.attachments.push(attachment);
             options.body = JSON.stringify(requestBody);
             request(options, function (err) {
