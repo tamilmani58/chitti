@@ -1,8 +1,8 @@
 {{#each this}}
-<span> {{@key}} </span>
+<span>Uploads For {{@key}} </span>
 <ul>
     {{#each this}}
-    <li> {{changeLog}} {{email}} {{uploadHr}}</li>
+    <li style = "font-family: monospace; line-height: 2px"> <span>{{changeLog}}</span> <span>({{adName}})</span><span> [{{uploadHr}}]</span></li>
     {{/each}}
 </ul>
 {{/each}}

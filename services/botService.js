@@ -108,9 +108,10 @@ function BotService() {
                 data.forEach(function (changeLog) {
                     var changeLogResponse = {};
                     var date = changeLog.datetime;
+                    date = moment(date).format("MMM DD, YYYY (ddd)");
                    parsedResponse[date] =  parsedResponse[date] || [];
                     changeLogResponse.changeLog = changeLog.changelog;
-                    changeLogResponse.email = changeLog.email;
+                    changeLogResponse.adName = changeLog.email.split('@')[0];
                     changeLogResponse.uploadHr = moment(date).format("HH:mm");
                     parsedResponse[date].push(changeLogResponse)
                 });
