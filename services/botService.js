@@ -6,6 +6,15 @@ var uploadLogRepository = require('../repositories/uploadLogRepository');
 var templateService = require('../services/templateService.js');
 var handlebars = require('handlebars');
 var moment = require('moment');
+var symbolToMeaningMap = {"y":"years",
+    "Q":"quarters",
+    "M":"months",
+    "w":"weeks","d":"days",
+    "h":"hours",
+    "m":"minutes",
+    "s":"seconds",
+    "ms":"milliseconds"
+};
 function BotService() {
     var successStageTemplate = [
         "Hey @USERNAME, Your changes are ready in SETUP",
@@ -51,7 +60,7 @@ function BotService() {
         options.method = 'POST';
         request(options, callback);
     }
-    function postAttachment(userId, duration, html) {
+    function postAttachment(userId, duration, format, html) {
         var requestBody = {};
         requestBody.message = {};
         requestBody.message.to = userId;
@@ -59,7 +68,7 @@ function BotService() {
         requestBody.message.attachments = [];
         var attachment = {};
         attachment.title = "Change Logs";
-        attachment.description = "Change Logs for " + duration;
+        attachment.description = "Change Logs for " + duration + " " + symbolToMeaningMap[format];
         attachment.views = {};
         attachment.views.html = {};
         attachment.views.html.inline = html;
@@ -120,7 +129,7 @@ function BotService() {
             var changeListTemplate = handlebars.compile(changeListTemplateString);
             var changeListHtml = changeListTemplate(parsedResponse);
 
-            postAttachment(event.userId, duration, changeListHtml);
+            postAttachment(event.chat, duration, format, changeListHtml);
 
         });
 
