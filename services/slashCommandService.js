@@ -30,7 +30,7 @@ var processSlashEvent = function (event) {
         return getStatusMessage();
     } else if (text.indexOf('duration') !== -1) {
         var durationText = text.split(" ")[1];
-        var format = durationText.substring(-1);
+        var format = durationText.substr(-1);
         var duration = parseInt(durationText.substring(0, durationText.length -1));
         botService.sendDurationNotification(event, duration, format);
         return {'text': 'Gimme Some Time'};

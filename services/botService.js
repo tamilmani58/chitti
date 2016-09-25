@@ -5,6 +5,7 @@ var util = require('../util');
 var uploadLogRepository = require('../repositories/uploadLogRepository');
 var templateService = require('../services/templateService.js');
 var handlebars = require('handlebars');
+var moment = require('moment');
 function BotService() {
     var successStageTemplate = [
         "Hey @USERNAME, Your changes are ready in SETUP",
@@ -65,8 +66,11 @@ function BotService() {
         attachment.views.html.width = 400;
         attachment.views.html.height = 400;
         requestBody.message.attachments.push(attachment);
-        options.body = requestBody;
-        request(options, function () {});
+        options.body = JSON.stringify(requestBody);
+        options.method = 'POST';
+        request(options, function (err) {
+            console.log(err);
+        });
     }
 
     this.sendStageBuildSuccessNotification = function (pushConfig) {
@@ -92,16 +96,18 @@ function BotService() {
         sendMessage(messageText, this.sendMessageCallback);
     };
     this.sendDurationNotification = function (event, duration, format) {
-        var startTime = moment().subtract(duration, format).utc().format();
         var endTime = moment().utc().format();
+        var startTime = moment().subtract(duration, format).utc().format();
+        console.log(duration,format);
         var getUploadsPromise = uploadLogRepository.getUploadsForDuration(startTime, endTime);
 
-        getUploadsPromise.then(function (data) {
+        return getUploadsPromise.then(function (data) {
+            console.log(data);
             var parsedResponse = {};
             if (util.isArray(data) && data.length > 0) {
                 data.forEach(function (changeLog) {
                     var changeLogResponse = {};
-                    var date = changeLog.dateTime;
+                    var date = changeLog.datetime;
                    parsedResponse[date] =  parsedResponse[date] || [];
                     changeLogResponse.changeLog = changeLog.changelog;
                     changeLogResponse.email = changeLog.email;

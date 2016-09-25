@@ -39,7 +39,7 @@ app.post('/pushbuild', buildManagementService.stageBuild);
 app.post('/stagebuild', buildManagementService.stageBuild);
 app.post('/livebuild', buildManagementService.liveBuild);
 app.get('/widget', function (req, res) {
-    res.sendFile(path.join(__dirname + 'views/widget.html'));
+    res.sendFile(path.join(__dirname + '/views/widget.html'));
 });
 app.post('/push', function (req, res) {
     console.log("did it push", req.body);
