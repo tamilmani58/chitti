@@ -11,7 +11,7 @@ var sendMessageCallback = function(error, response, body) {
         //push stage
         pushMessage.ref = "refs/heads/master";
         var options = {
-            "url": "http://2b77282c.ngrok.io/push",
+            "url": "http://c2091c66.ngrok.io/push",
             "headers":{
                 "content-type" : "application/json"
             }
@@ -38,7 +38,7 @@ var message = {
 options.headers = {
     "content-type" : "application/json"
 };
-options.url = "http://2b77282c.ngrok.io/hook";
+options.url = "http://c2091c66.ngrok.io/hook";
 options.body = JSON.stringify(message);
 options.method = 'POST';
 request(options, sendMessageCallback);
@@ -51,7 +51,7 @@ function jenkinStageCallback(error, response, body) {
             "jenkinsRef" : "http://ci.media.net"
         };
         var options = {
-            "url": "http://2b77282c.ngrok.io/pushbuild",
+            "url": "http://c2091c66.ngrok.io/pushbuild",
             "headers":{
                 "content-type" : "application/json"
             }
@@ -69,7 +69,7 @@ function livepushcallback(error, response, body) {
     if (!error && response.statusCode == 200) {
         pushMessage.ref = "refs/heads/release";
         var options = {
-            "url": "http://2b77282c.ngrok.io/push",
+            "url": "http://c2091c66.ngrok.io/push",
             "headers":{
                 "content-type" : "application/json"
             }
@@ -90,7 +90,7 @@ function jenkinliveCallback(error, response, body) {
             "jenkinsRef" : "http://ci.media.net"
         };
         var options = {
-            "url": "http://2b77282c.ngrok.io/livebuild",
+            "url": "http://c2091c66.ngrok.io/livebuild",
             "headers":{
                 "content-type" : "application/json"
             }

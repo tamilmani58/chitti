@@ -20,5 +20,7 @@ uploadLogRepo.getLastUploadTime().then(function (lastUpload) {
 
 
 uploadLogRepo.getUploadsForDuration("2016-09-24", "2016-09-25").then(function (results) {
-    console.log(results)
+    results.forEach(function (result) {
+        console.log(result)
+    });
 });
