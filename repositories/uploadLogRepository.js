@@ -8,7 +8,7 @@ function uploadLogRepository() {
     };
 
     this.getUploadsForDuration = function (start, end) {
-        return sequelize.query("SELECT datetime, email, changelog FROM `uploadlog` JOIN changelog on uploadlog.uploadID WHERE datetime BETWEEN $start AND $end",
+        return sequelize.query("SELECT datetime, email, changelog FROM `uploadlog` JOIN changelog on uploadlog.uploadID WHERE datetime BETWEEN $start AND $end order by datetime DESC",
             { bind: {start :start, end: end}, type: Sequelize.QueryTypes.SELECT}
             ).then(function (uploads) {
             return uploads
