@@ -1,5 +1,5 @@
 var config = {
-    DEFAULT_GROUP_ID: "g:7356796833216454833",
+    DEFAULT_GROUP_ID: "g:8849307524986266836",
     APP_ID: "bfa34a1d-fc8a-40f3-8a52-200f20cb236e",
     APP_SECRET: "c177f6fd-aa32-47a6-b1f7-d365421bd765",
     BOT_GUID: "Bwbj22wsmbj26e7f",

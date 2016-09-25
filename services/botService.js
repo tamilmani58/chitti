@@ -34,8 +34,7 @@ function BotService() {
     ];
 
     var failTemplate = [
-        "Hey @USERNAME, heads up. We screwed something up in SETUP",
-        ""
+        "Hey @USERNAME, heads up. We screwed something up in SETUP"
     ];
     var options = {
         "url" : config.FLOCK_SEND_MESSAGE_ENDPOINT,
@@ -82,13 +81,13 @@ function BotService() {
             requestBody.message.text = "";
             requestBody.message.attachments = [];
             var attachment = {};
-            attachment.title = adname + "'s changes :-";
-            attachment.description = "";
+            attachment.title = "My Changes :-";
+            // attachment.description = "";
             attachment.views = {};
             attachment.views.html = {};
             attachment.views.html.inline = compiledHtml;
-            attachment.views.html.width = 400;
-            //attachment.views.html.height = 300;
+            attachment.views.html.width = 500;
+            attachment.views.html.height = 40 + (15 * templateData.changes.length);
             requestBody.message.attachments.push(attachment);
             options.body = JSON.stringify(requestBody);
             request(options, function (err) {

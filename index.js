@@ -29,11 +29,11 @@ app.use(flock.validationTokenChecker);
 
 
 app.get('/', function (req, res) {
-    res.send('Hello World!');
+    res.send('APP Install Successful');
 });
 
 app.post('/', function (req, res) {
-    res.end("Hello World");
+    res.end("App Install Successful");
 
 });
 app.post('/new', function (req, res) {
