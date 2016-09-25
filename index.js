@@ -39,6 +39,7 @@ app.post('/new', function (req, res) {
     var params = JSON.parse(req.body.params);
     outGoingHookService.receiveMessage(changeMessage, params.userId);
     botService.sendMessageAsUser(params.userId, params.chat, changeMessage);
+    res.sendStatus(200);
     res.end();
 });
 app.post('/events', flock.router);
