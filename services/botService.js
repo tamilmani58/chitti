@@ -6,6 +6,7 @@ var uploadLogRepository = require('../repositories/uploadLogRepository');
 var templateService = require('../services/templateService.js');
 var handlebars = require('handlebars');
 var moment = require('moment');
+var userRepository = require("../repositories/userRepository");
 var symbolToMeaningMap = {"y":"years",
     "Q":"quarters",
     "M":"months",
@@ -43,19 +44,23 @@ function BotService() {
         }
     };
     this.sendMessageAsUser = function (sender, receiver, message) {
-        var options = {
-            "url" : config.FLOCK_SEND_MESSAGE_ENDPOINT,
-            "headers": {
-                "X-Flock-User-Token" : sender
-            },
-            "method": 'POST'
-        };
-        var messageObj = {};
-        messageObj.to = receiver;
-        messageObj.from = sender;
-        messageObj.text = message;
-        options.body = JSON.stringify(messageObj);
-        request(options, function () {});
+        userRepository.getUserByFlockId(sender).then(function (user) {
+            var options = {
+                "url" : config.FLOCK_SEND_MESSAGE_ENDPOINT,
+                "headers": {
+                    "X-Flock-User-Token" : user.userToken()
+                },
+                "method": 'POST'
+            };
+            var messageObj = {};
+            messageObj.to = receiver;
+            messageObj.from = user.flockId;
+            messageObj.text = message;
+            options.body = JSON.stringify({"message": messageObj});
+            console.log(options);
+            request(options, function (err) { console.log(err); });
+        });
+
     };
 
     this.sendMessageCallback = function(error, response, body) {

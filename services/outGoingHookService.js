@@ -9,13 +9,14 @@ var changeManagementService = require('../services/changeManagementService');
  uid: '1474714428200-RPMME4-apollo-z4' } */
 var receiveMessage = function (changeMessage, userId) {
     var changeList = changeMessage.split("\n");
-    var user = userRepository.getUserByFlockId(userId);
-    changeManagementService.commit(changeList.map(function (change) {
-        return {
-            userAd: user.userAd(),
-            message: change
-        };
-    }));
+    var user = userRepository.getUserByFlockId(userId).then(function (user) {
+        changeManagementService.commit(changeList.map(function (change) {
+            return {
+                userAd: user.userAd(),
+                message: change
+            };
+        }));
+    });
 };
 var outGoingHookService = {
     receiveMessage: receiveMessage

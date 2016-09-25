@@ -16,6 +16,7 @@ var buildManagementService = require('./services/buildManagementService.js');
 var slashCommandService = require('./services/slashCommandService.js');
 var outGoingHookService = require('./services/outGoingHookService.js');
 var botService = require('./services/botService.js');
+var userRepository = require('./repositories/userRepository');
 var app = express();
 
 flock.setAppId(config.APP_ID);
@@ -32,7 +33,8 @@ app.get('/', function (req, res) {
 });
 
 app.post('/', function (req, res) {
-    res.send("done");
+    res.end("Hello World");
+
 });
 app.post('/new', function (req, res) {
     var changeMessage = req.body.data;
@@ -74,6 +76,18 @@ flock.events.on('client.recieve', function (event) {
 
 flock.events.on('client.slashCommand', function (event) {
    return slashCommandService.processSlashEvent(event);
+});
+
+flock.events.on('app.install', function (event) {
+        userRepository.setUserData({
+            userId: event.userId,
+            userToken: event.userToken
+        }).then(function () {
+
+        });
+    return {
+        "text": "Successful Installation"
+    };
 });
 
 app.listen(1432, function () {

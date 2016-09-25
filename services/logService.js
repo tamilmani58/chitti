@@ -15,11 +15,13 @@ var logService = function () {
             type: jenkinsData.type
         });
         changeLogCollection.forEach(function (change) {
-           changeLogRepository.createChangeLog({
-               uploadID: uniqueId,
-               email: userRepository.getUserByAd(change.userAd()).email(),
-               changeLog: change.message()
-           })
+            userRepository.getUserByAd(change.userAd()).then(function (user) {
+                changeLogRepository.createChangeLog({
+                    uploadID: uniqueId,
+                    email: user.email(),
+                    changeLog: change.message()
+                })
+            });
         });
     }
 };

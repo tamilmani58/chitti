@@ -40,8 +40,8 @@ var stageBuild = function (req, res) {
 };
 var liveBuild = function (req, res) {
     var culprits = req.body.culprits;
-    var status = req.body.status;
-    var jenkinsRef = req.body.jenkinsRef ;
+    var status = req.body.result === "SUCCESS" ? 1 : 0;
+    var jenkinsRef = req.body.buildurl ;
     var type = req.body.type || TYPE.UPLOAD;
     var liveStatus = status === 1 ? Change.State.LIVE_SUCCESS : Change.State.STAGE_BUILD;
     culprits.forEach(function (culprit) {

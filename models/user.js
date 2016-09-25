@@ -2,6 +2,7 @@ function User() {
     var userAd;
     var flockId;
     var email;
+    var userToken;
 
     this.userAd = function (user) {
         if(user === undefined){
@@ -24,6 +25,14 @@ function User() {
             return email;
         }
         email = emailId;
+        return this;
+    };
+
+    this.userToken = function (userTokenId) {
+        if(userTokenId === undefined){
+            return userToken;
+        }
+        userToken = userTokenId;
         return this;
     }
 }
