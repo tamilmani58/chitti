@@ -67,7 +67,6 @@ var liveBuild = function (req, res) {
         return res.end();
     }
     botService.sendLiveBuildFailNotification({
-
         adName: "All"
     });
 };

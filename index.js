@@ -49,16 +49,15 @@ app.post('/events', flock.router);
 app.post('/pushbuild', buildManagementService.stageBuild);
 app.post('/stagebuild', buildManagementService.stageBuild);
 app.post('/livebuild', buildManagementService.liveBuild);
+
 app.get('/widget', function (req, res) {
     res.sendFile(path.join(__dirname + '/views/widget.html'));
 });
 app.post('/push', function (req, res) {
-    console.log("did it push", req.body);
     var parsedGitResponse = gitResponseParser.parseGitResponseObject(req.body);
     if (!(gitResponseParser.isPushToMaster(parsedGitResponse.branchName) || gitResponseParser.isPushToRelease(parsedGitResponse.branchName))) {
         return res.end();
     }
-    console.log(parsedGitResponse);
     if (gitResponseParser.isPushToMaster(parsedGitResponse.branchName)) {
         changeManagementService.push(parsedGitResponse);
     } else {
