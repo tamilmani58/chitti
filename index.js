@@ -14,6 +14,7 @@ var outGoingHookService = require('./services/outGoingHookService.js');
 var changeManagementService = require('./services/changeManagementService.js');
 var buildManagementService = require('./services/buildManagementService.js');
 var slashCommandService = require('./services/slashCommandService.js');
+var outGoingHookService = require('./services/outGoingHookService.js');
 var app = express();
 
 flock.setAppId(config.APP_ID);
@@ -32,7 +33,11 @@ app.get('/', function (req, res) {
 app.post('/', function (req, res) {
     res.send("done");
 });
-app.post('/hook', outGoingHookService);
+app.post('/new', function (req, res) {
+    var changeMessage = req.body.data;
+    var params = JSON.parse(req.body.params);
+    outGoingHookService.receiveMessage(changeMessage, params.userId);
+});
 app.post('/events', flock.router);
 
 app.post('/pushbuild', buildManagementService.stageBuild);

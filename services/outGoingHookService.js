@@ -7,17 +7,18 @@ var changeManagementService = require('../services/changeManagementService');
  actor: '',
  text: 'hi',
  uid: '1474714428200-RPMME4-apollo-z4' } */
-function receiveMessage(req, res){
-    var changeMessage = req.body;
-    var changeList = changeMessage.text.split("\n");
-    var user = userRepository.getUserByFlockId(changeMessage.from);
+var receiveMessage = function (changeMessage, userId) {
+    var changeList = changeMessage.split("\n");
+    var user = userRepository.getUserByFlockId(userId);
     changeManagementService.commit(changeList.map(function (change) {
         return {
             userAd: user.userAd(),
             message: change
         };
     }));
-    res.end();
 }
+var outGoingHookService = {
+    receiveMessage: receiveMessage
+};
 
-module.exports = receiveMessage;
+module.exports = outGoingHookService;
