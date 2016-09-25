@@ -113,7 +113,7 @@ function BotService() {
         options.method = 'POST';
         request(options, callback);
     }
-    function postAttachment(userId, duration, format, html) {
+    function postAttachment(userId, duration, format, html, changeLogLength) {
         var requestBody = {};
         requestBody.message = {};
         requestBody.message.to = userId;
@@ -126,7 +126,7 @@ function BotService() {
         attachment.views.html = {};
         attachment.views.html.inline = html;
         attachment.views.html.width = 400;
-        attachment.views.html.height = 300;
+        attachment.views.html.height = 40 + (15 * changeLogLength);
         requestBody.message.attachments.push(attachment);
         options.body = JSON.stringify(requestBody);
         options.method = 'POST';
@@ -182,7 +182,7 @@ function BotService() {
             var changeListTemplate = handlebars.compile(changeListTemplateString);
             var changeListHtml = changeListTemplate(parsedResponse);
 
-            postAttachment(event.chat, duration, format, changeListHtml);
+            postAttachment(event.chat, duration, format, changeListHtml, (data.length || 0));
 
         });
 
