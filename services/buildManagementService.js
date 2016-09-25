@@ -14,8 +14,10 @@ var TYPE = {
 };
 var stageBuild = function (req, res) {
     console.log("stage build",req.body);
-    var buildUser = req.body.culprits[0];
-    var status = req.body.status;
+    var culprits = req.body.culprits.substring(1, req.body.culprits.length - 1).split(",");
+    console.log(culprits);
+    var buildUser = culprits[0];
+    var status = req.body.result === "SUCCESS" ? 1 : 0;
     var buildStatus = status === 1 ? Change.State.STAGE_BUILD: Change.State.COMMIT;
     var adName = buildUser.split('@')[0];
     var buildChanges = changeCollection.filterByUserAd(adName);
@@ -39,7 +41,7 @@ var stageBuild = function (req, res) {
     return res.end();
 };
 var liveBuild = function (req, res) {
-    var culprits = req.body.culprits;
+    var culprits = req.body.culprits.substring(1, req.body.culprits.length - 1).split(",");
     var status = req.body.result === "SUCCESS" ? 1 : 0;
     var jenkinsRef = req.body.buildurl ;
     var type = req.body.type || TYPE.UPLOAD;
