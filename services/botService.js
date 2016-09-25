@@ -42,6 +42,21 @@ function BotService() {
             "X-Flock-User-Token" : config.BOT_TOKEN
         }
     };
+    this.sendMessageAsUser = function (sender, receiver, message) {
+        var options = {
+            "url" : config.FLOCK_SEND_MESSAGE_ENDPOINT,
+            "headers": {
+                "X-Flock-User-Token" : sender
+            },
+            "method": 'POST'
+        };
+        var messageObj = {};
+        messageObj.to = receiver;
+        messageObj.from = sender;
+        messageObj.text = message;
+        options.body = JSON.stringify(messageObj);
+        request(options, function () {});
+    };
 
     this.sendMessageCallback = function(error, response, body) {
         if (!error && response.statusCode == 200) {
