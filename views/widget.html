@@ -6,6 +6,7 @@
     <!-- Create a simple CodeMirror instance -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.19.0/codemirror.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.19.0/codemirror.min.js"></script>
+    <script src="https://apps-static.flock.co/js-sdk/0.1.0/flock.js"></script>
     <style type="text/css">
         .body {
             width: 100%;
@@ -55,7 +56,11 @@
     function makeAjaxRequest() {
         var xhttp = new XMLHttpRequest();
         var url = "/new";
-
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                flock.close();
+            }
+        };
         xhttp.open("POST", url, true);
         xhttp.setRequestHeader("Content-type", "application/json");
         var params = {

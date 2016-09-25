@@ -73,7 +73,7 @@ function BotService() {
         attachment.views.html = {};
         attachment.views.html.inline = html;
         attachment.views.html.width = 400;
-        //attachment.views.html.height = 400;
+        attachment.views.html.height = 300;
         requestBody.message.attachments.push(attachment);
         options.body = JSON.stringify(requestBody);
         options.method = 'POST';
