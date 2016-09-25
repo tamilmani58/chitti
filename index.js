@@ -37,6 +37,8 @@ app.post('/new', function (req, res) {
     var changeMessage = req.body.data;
     var params = JSON.parse(req.body.params);
     outGoingHookService.receiveMessage(changeMessage, params.userId);
+    res.sendStatus(200);
+    res.end();
 });
 app.post('/events', flock.router);
 

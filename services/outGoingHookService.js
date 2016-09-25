@@ -16,7 +16,7 @@ var receiveMessage = function (changeMessage, userId) {
             message: change
         };
     }));
-}
+};
 var outGoingHookService = {
     receiveMessage: receiveMessage
 };
