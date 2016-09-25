@@ -54,13 +54,47 @@ function BotService() {
             };
             var messageObj = {};
             messageObj.to = receiver;
-            messageObj.from = user.flockId;
+            messageObj.from = user.flockId();
             messageObj.text = message;
             options.body = JSON.stringify({"message": messageObj});
             console.log(options);
             request(options, function (err) { console.log(err); });
         });
 
+    };
+    this.sendAttachmentForUserChanges = function (sender, receiver, message) {
+        userRepository.getUserByFlockId(sender).then(function (user) {
+            var options = {
+                "url" : config.FLOCK_SEND_MESSAGE_ENDPOINT,
+                "headers": {
+                    "X-Flock-User-Token" : user.userToken()
+                },
+                "method": 'POST'
+            };
+            var adname = user.userAd();
+            var templateData = {};
+            templateData.changes = message.split('\n');
+            var userUploadChangesTemplate = handlebars.compile(templateService.getUserUploadChangesTemplate());
+            var compiledHtml = userUploadChangesTemplate(templateData);
+            var requestBody = {};
+            requestBody.message = {};
+            requestBody.message.to = receiver;
+            requestBody.message.text = "Lets see what " + adname + "has to Upload";
+            requestBody.message.attachments = [];
+            var attachment = {};
+            attachment.title = adname + "'s changes :-";
+            attachment.description = "These are the changes made by " + adname + "for the current upload";
+            attachment.views = {};
+            attachment.views.html = {};
+            attachment.views.html.inline = compiledHtml;
+            attachment.views.html.width = 400;
+            attachment.views.html.height = 300;
+            requestBody.message.attachments.push(attachment);
+            options.body = JSON.stringify(requestBody);
+            request(options, function (err) {
+                console.log(err);
+            });
+        });
     };
 
     this.sendMessageCallback = function(error, response, body) {

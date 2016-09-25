@@ -40,7 +40,7 @@ app.post('/new', function (req, res) {
     var changeMessage = req.body.data;
     var params = JSON.parse(req.body.params);
     outGoingHookService.receiveMessage(changeMessage, params.userId);
-    botService.sendMessageAsUser(params.userId, params.chat, changeMessage);
+    botService.sendAttachmentForUserChanges(params.userId, params.chat, changeMessage);
     res.sendStatus(200);
     res.end();
 });
