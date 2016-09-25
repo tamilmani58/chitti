@@ -108,12 +108,12 @@ function BotService() {
                 data.forEach(function (changeLog) {
                     var changeLogResponse = {};
                     var date = changeLog.datetime;
-                    date = moment(date).format("MMM DD, YYYY (ddd)");
-                   parsedResponse[date] =  parsedResponse[date] || [];
+                    var dateDisplay = moment(date).format("MMM DD, YYYY (ddd)");
+                   parsedResponse[dateDisplay] =  parsedResponse[dateDisplay] || [];
                     changeLogResponse.changeLog = changeLog.changelog;
                     changeLogResponse.adName = changeLog.email.split('@')[0];
                     changeLogResponse.uploadHr = moment(date).format("HH:mm");
-                    parsedResponse[date].push(changeLogResponse)
+                    parsedResponse[dateDisplay].push(changeLogResponse)
                 });
             }
             var changeListTemplateString = templateService.getChangeListTemplate();
